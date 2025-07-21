@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cores padrão do Android Studio -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Cores CLARAS (ainda usadas em alguns elementos específicos do layout) -->
+    <color name="indigo_600">#FF4F46E5</color>
+    <color name="blue_500">#FF3B82F6</color>
+    <color name="gray_100">#FFF3F4F6</color>
+    <color name="gray_500">#FF6B7280</color>
+    <color name="gray_800">#FF1F2937</color>
+    <color name="background_light">#FFF0F2F5</color>
+    <color name="surface_light">#FFFFFFFF</color>
+
+    <!-- Cores para rendimentos e gastos (tons claros, usadas no fundo dos ícones) -->
+    <color name="green_light">#FFD1FAE5</color>
+    <color name="red_light">#FFFEE2E2</color>
+
+    <!-- Cores para ícones (se ainda não tiver) -->
+    <color name="lightbulb_icon_color">#FFD4AF37</color>
+    <color name="wifi_icon_color">#FF4CAF50</color>
+    <color name="money_icon_color">#FF8BC34A</color>
+    <color name="home_icon_color">#FF9C27B0</color>
+
+    <!-- SUAS NOVAS CORES ESCURAS (DEFINIÇÕES HEXADECIMAIS) -->
+    <color name="dark_primary_custom">#FF171F32</color>
+    <color name="dark_surface_custom">#FF10172A</color>
+    <color name="dark_background_custom">#FF000000</color> <!-- Preto puro -->
+
+    <!-- Cores de texto e acento para o tema escuro, para garantir contraste -->
+    <color name="dark_on_primary_custom">#FFFFFFFF</color>
+    <color name="dark_on_surface_custom">#FFFFFFFF</color>
+    <color name="dark_on_background_custom">#FFFFFFFF</color>
+    <color name="dark_accent_green">#FF16A34A</color> <!-- Verde para rendimentos no tema escuro -->
+    <color name="dark_accent_red">#FFDC2626</color> <!-- Vermelho para gastos no tema escuro -->
+    <color name="dark_surface_variant_custom">#FF2A344A</color> <!-- Um tom mais claro para elementos em superfície escura -->
+    <color name="dark_on_surface_variant_custom">#FFCCCCCC</color> <!-- Texto secundário em elementos escuros -->
+
+    <!-- Cores RED_600 e GREEN_600 (confirmadas e presentes) -->
+    <color name="green_600">#FF16A34A</color>
+    <color name="red_600">#FFDC2626</color>
+</resources>

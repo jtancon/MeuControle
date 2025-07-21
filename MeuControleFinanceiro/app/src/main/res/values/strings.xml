@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MC</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="all_transactions_title">Todas as Transações</string>
+    <string name="profile_title">Meu Perfil</string>
+    <string name="add_income_title">Adicionar Rendimento</string>
+    <string name="add_expense_title">Adicionar Gasto</string>
+    <string name="back_button_description">Voltar</string>
+    <string name="notifications_description">Notificações</string>
+    <string name="toggle_balance_visibility_description">Alternar visibilidade do saldo</string>
+    <string name="add_transaction_description">Adicionar nova transação</string>
+    <string name="add_income_button_text">Adicionar Rendimento</string>
+    <string name="add_expense_button_text">Adicionar Gasto</string>
+    <string name="view_all_transactions_button_text">Ver todas as transações</string>
+    <string name="logout_button_text">Sair da Conta</string>
+    <string name="income_description_hint">Descrição do Rendimento</string>
+    <string name="income_amount_hint">Valor (R$)</string>
+    <string name="date_hint">Data (DD/MM/AAAA)</string>
+    <string name="expense_description_hint">Descrição do Gasto</string>
+    <string name="expense_amount_hint">Valor (R$)</string>
+    <string name="category_hint">Categoria</string>
+</resources>
