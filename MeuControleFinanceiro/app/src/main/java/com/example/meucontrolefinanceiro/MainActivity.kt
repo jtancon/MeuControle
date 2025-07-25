@@ -2,11 +2,9 @@ package com.example.meucontrolefinanceiro
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.meucontrolefinanceiro.R
 import com.example.meucontrolefinanceiro.databinding.ActivityMainBinding
 import com.example.meucontrolefinanceiro.ui.adapters.TransactionAdapter
 import java.text.NumberFormat
@@ -29,119 +27,111 @@ enum class TransactionType {
 
 class MainActivity : AppCompatActivity() {
 
+    // A classe de binding é gerada a partir do nome do seu ficheiro XML (activity_main.xml -> ActivityMainBinding)
     private lateinit var binding: ActivityMainBinding
     private var balanceVisible = true // Estado para a visibilidade do saldo
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // FORÇAR O TEMA ESCURO AQUI (ANTES DE super.onCreate())
-        // Isso fará com que o aplicativo sempre use o modo noturno, independentemente da configuração do sistema.
-        // É importante que esta linha seja chamada antes de qualquer inflação de layout ou acesso a recursos de tema.
+        // Força o tema escuro, o que é ótimo para o nosso novo design
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
-        super.onCreate(savedInstanceState) // super.onCreate() agora é chamado depois
-
+        super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Configurar a Toolbar
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.title = getString(R.string.dashboard_title) // Usando string resource
-
-        // Configurar o clique no avatar para ir para a tela de perfil
+        // Clique no avatar para ir para a tela de perfil
         binding.userAvatar.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
 
-        // --- Lógica do Cartão de Saldo ---
-        updateBalanceDisplay()
-
+        // Clique para mostrar/ocultar o saldo
         binding.toggleBalanceVisibility.setOnClickListener {
             balanceVisible = !balanceVisible
             updateBalanceDisplay()
         }
 
-        // --- Lógica das Transações Recentes ---
-        setupRecentTransactions()
-
-        // --- Lógica do FAB (Floating Action Button) ---
-        binding.fabAddTransaction.setOnClickListener {
-            toggleFabOptions()
-        }
-
-        // Lógica para os botões das opções do FAB
-        binding.fabAddIncome.setOnClickListener {
-            val intent = Intent(this, AddIncomeActivity::class.java)
-            startActivity(intent)
-            toggleFabOptions() // Fecha as opções após o clique
-        }
-
-        binding.fabAddExpense.setOnClickListener {
-            val intent = Intent(this, AddExpenseActivity::class.java)
-            startActivity(intent)
-            toggleFabOptions() // Fecha as opções após o clique
-        }
-
+        // Clique no botão "Ver todas"
         binding.viewAllTransactionsButton.setOnClickListener {
             val intent = Intent(this, AllTransactionsActivity::class.java)
             startActivity(intent)
         }
+
+        // Clique nos novos botões de Ação Rápida
+        binding.addIncomeButton.setOnClickListener {
+            val intent = Intent(this, AddIncomeActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.addExpenseButton.setOnClickListener {
+            val intent = Intent(this, AddExpenseActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Listener para a barra de navegação inferior
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    // Já estamos no Início, não faz nada
+                    true
+                }
+                R.id.nav_transactions -> {
+                    val intent = Intent(this, AllTransactionsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_charts -> {
+                    val intent = Intent(this, ChartsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.nav_profile -> {
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+
+
+        // --- Chamadas de Funções para Configurar a UI ---
+        updateBalanceDisplay()
+        setupRecentTransactions()
     }
 
     private fun updateBalanceDisplay() {
         val currencyFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
-
-        val currentBalance = 5250.75 // Dados de exemplo
-        val monthlyIncome = 3500.00
-        val monthlyExpenses = 1250.25
-
-        // Obter as cores do tema (se necessário, para elementos que não pegam automaticamente)
-        // Você já tem este código no seu MainActivity.kt
-        val typedValueRed = android.util.TypedValue()
-        theme.resolveAttribute(R.attr.expenseColor, typedValueRed, true)
-        val redColor = typedValueRed.data
-
-        val typedValueGreen = android.util.TypedValue()
-        theme.resolveAttribute(R.attr.incomeColor, typedValueGreen, true)
-        val greenColor = typedValueGreen.data
+        val currentBalance = 0.75 // Dados de exemplo
 
         if (balanceVisible) {
             binding.currentBalanceText.text = currencyFormat.format(currentBalance)
-            binding.monthlyIncomeText.text = currencyFormat.format(monthlyIncome)
-            binding.monthlyExpensesText.text = currencyFormat.format(monthlyExpenses)
             binding.toggleBalanceVisibility.setImageResource(R.drawable.ic_visibility)
-            binding.monthlyIncomeText.setTextColor(greenColor)
-            binding.monthlyExpensesText.setTextColor(redColor)
         } else {
             binding.currentBalanceText.text = "R$ ••••••"
-            binding.monthlyIncomeText.text = "R$ ••••••"
-            binding.monthlyExpensesText.text = "R$ ••••••"
             binding.toggleBalanceVisibility.setImageResource(R.drawable.ic_visibility_off)
-            binding.monthlyIncomeText.setTextColor(greenColor)
-            binding.monthlyExpensesText.setTextColor(redColor)
         }
+
     }
 
     private fun setupRecentTransactions() {
-        // Certifique-se de que os ícones abaixo existem em res/drawable/
         val transactions = listOf(
-            Transaction("1", "Compras de Supermercado", 120.50, TransactionType.EXPENSE, "Alimentação", "Ontem, 18:30", R.drawable.ic_shopping_bag),
-            Transaction("2", "Passagem de Ônibus", 4.40, TransactionType.EXPENSE, "Transporte", "Hoje, 08:15", R.drawable.ic_train),
-            Transaction("3", "Freelance Projeto X", 800.00, TransactionType.INCOME, "Rendimento", "15 de Julho", R.drawable.ic_wallet),
-            Transaction("4", "Café da Manhã", 15.00, TransactionType.EXPENSE, "Alimentação", "Hoje, 07:45", R.drawable.ic_fastfood)
+            Transaction("1", "Compras de Supermercado", 120.50, TransactionType.EXPENSE, "Alimentação", "Hoje", R.drawable.ic_shopping_bag),
+            Transaction("2", "Salário Mensal", 3500.00, TransactionType.INCOME, "Rendimento", "Ontem", R.drawable.ic_wallet),
+            Transaction("3", "Conta de Luz", 98.90, TransactionType.EXPENSE, "Contas", "15 de Julho", R.drawable.ic_lightbulb),
+            Transaction("4", "Conta de Agua", 78.90, TransactionType.EXPENSE, "Contas", "15 de Julho", R.drawable.ic_lightbulb),
+            Transaction("5", "Bico", 350.00, TransactionType.INCOME, "Rendimento", "Ontem", R.drawable.ic_wallet),
+            Transaction("6", "Compras de Supermercado", 120.50, TransactionType.EXPENSE, "Alimentação", "Hoje", R.drawable.ic_shopping_bag),
+            Transaction("7", "Aluguel", 1500.00, TransactionType.EXPENSE, "Moradia", "01 de Julho", R.drawable.ic_home),
+            Transaction("8", "Salário Mensal", 4000.00, TransactionType.INCOME, "Rendimento", "05 de Julho", R.drawable.ic_wallet),
+            Transaction("9", "Conta de Luz", 180.00, TransactionType.EXPENSE, "Contas", "10 de Julho", R.drawable.ic_lightbulb),
+            Transaction("10", "Internet", 90.00, TransactionType.EXPENSE, "Contas", "12 de Julho", R.drawable.ic_wifi),
+            Transaction("11", "Jantar Fora", 75.00, TransactionType.EXPENSE, "Alimentação", "18 de Julho", R.drawable.ic_fastfood),
+            Transaction("12", "Venda de Item", 250.00, TransactionType.INCOME, "Rendimento Extra", "19 de Julho", R.drawable.ic_money)
         )
 
         binding.transactionsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.transactionsRecyclerView.adapter = TransactionAdapter(transactions)
     }
 
-    private fun toggleFabOptions() {
-        if (binding.fabOptionsLayout.visibility == View.VISIBLE) {
-            binding.fabOptionsLayout.visibility = View.GONE
-            binding.fabAddTransaction.setImageResource(R.drawable.ic_add)
-        } else {
-            binding.fabOptionsLayout.visibility = View.VISIBLE
-            binding.fabAddTransaction.setImageResource(R.drawable.ic_close) // Ícone de 'X'
-        }
-    }
 }

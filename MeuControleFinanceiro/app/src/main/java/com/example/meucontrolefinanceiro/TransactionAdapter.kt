@@ -4,12 +4,11 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.meucontrolefinanceiro.R // Importe o R do namespace do seu projeto
-import com.example.meucontrolefinanceiro.databinding.ItemTransactionBinding // Importe o Binding do namespace correto
+import com.example.meucontrolefinanceiro.R
 import com.example.meucontrolefinanceiro.Transaction
 import com.example.meucontrolefinanceiro.TransactionType
+import com.example.meucontrolefinanceiro.databinding.ItemTransactionBinding
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -18,12 +17,11 @@ class TransactionAdapter(private val transactions: List<Transaction>) :
 
     /**
      * ViewHolder que usa View Binding.
-     * Ele guarda uma referência direta e segura para as Views do seu layout.
      */
     inner class TransactionViewHolder(val binding: ItemTransactionBinding) : RecyclerView.ViewHolder(binding.root)
 
     /**
-     * Cria um novo ViewHolder, inflando o layout do item usando View Binding.
+     * Cria um novo ViewHolder, inflando o layout do item.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val binding = ItemTransactionBinding.inflate(
@@ -41,25 +39,26 @@ class TransactionAdapter(private val transactions: List<Transaction>) :
         val transaction = transactions[position]
         val context = holder.itemView.context
         val currencyFormat = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+        val formattedAmount = currencyFormat.format(transaction.amount)
 
         // Acessa as Views através de 'holder.binding'
         holder.binding.transactionDescription.text = transaction.description
-        holder.binding.transactionCategoryTime.text = "${transaction.category} • ${transaction.time}"
         holder.binding.categoryIcon.setImageResource(transaction.iconResId)
+
+        // Usa um recurso de string para formatar o texto, evitando avisos
+        holder.binding.transactionCategoryTime.text = context.getString(R.string.category_time_format, transaction.category, transaction.time)
 
         // Lógica para definir cores e valores de despesa/receita
         val expenseColor = resolveThemeColor(context, R.attr.expenseColor)
         val incomeColor = resolveThemeColor(context, R.attr.incomeColor)
 
         if (transaction.type == TransactionType.EXPENSE) {
-            holder.binding.transactionAmount.text = "- ${currencyFormat.format(transaction.amount)}"
+            holder.binding.transactionAmount.text = context.getString(R.string.amount_format_expense, formattedAmount)
             holder.binding.transactionAmount.setTextColor(expenseColor)
-            holder.binding.categoryIconBackground.setCardBackgroundColor(ContextCompat.getColor(context, R.color.red_light))
             holder.binding.categoryIcon.setColorFilter(expenseColor)
         } else {
-            holder.binding.transactionAmount.text = "+ ${currencyFormat.format(transaction.amount)}"
+            holder.binding.transactionAmount.text = context.getString(R.string.amount_format_income, formattedAmount)
             holder.binding.transactionAmount.setTextColor(incomeColor)
-            holder.binding.categoryIconBackground.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green_light))
             holder.binding.categoryIcon.setColorFilter(incomeColor)
         }
 
@@ -69,7 +68,7 @@ class TransactionAdapter(private val transactions: List<Transaction>) :
     }
 
     /**
-     * Retorna o número total de itens na lista. (NOME CORRIGIDO)
+     * Retorna o número total de itens na lista.
      */
     override fun getItemCount(): Int = transactions.size
 

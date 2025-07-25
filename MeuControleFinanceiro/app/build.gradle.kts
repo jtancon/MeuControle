@@ -58,7 +58,7 @@ dependencies {
     implementation(libs.material) // Material Design Components (AppBar, CardView, FAB, etc.)
     implementation(libs.androidx.constraintlayout) // Para ConstraintLayout
     implementation(libs.androidx.recyclerview) // Para RecyclerView
-
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     // Dependências de Teste
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

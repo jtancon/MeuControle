@@ -19,9 +19,9 @@ class ProfileActivity : AppCompatActivity() {
         supportActionBar?.title = "Meu Perfil"
 
         // Dados de exemplo (substitua por dados reais do Firebase Authentication)
-        binding.profileNameText.text = "João da Silva"
-        binding.profileEmailText.text = "joao.silva@example.com"
-        binding.profileAvatarText.text = "JS" // Iniciais do usuário
+        binding.profileNameText.text = "João Tancon"
+        binding.profileEmailText.text = "joao.tancon@Gmail.com"
+        binding.profileAvatarText.text = "JT" // Iniciais do usuário
 
         binding.logoutButton.setOnClickListener {
             // TODO: Implementar lógica de logout do Firebase

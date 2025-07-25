@@ -29,7 +29,7 @@ class AddExpenseActivity : AppCompatActivity() {
         }
 
         // Configurar AutoCompleteTextView para categorias
-        val categories = arrayOf("Alimentação", "Transporte", "Moradia", "Lazer", "Contas", "Educação", "Saúde", "Outros")
+        val categories = arrayOf("Alimentação", "Transporte", "Lazer", "Contas", "Educação", "Saúde", "Namorada linda <3", "Outros")
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, categories)
         binding.expenseCategoryAutoCompleteText.setAdapter(adapter)
 

@@ -44,6 +44,9 @@
             android:label="@string/add_expense_title"
             android:parentActivityName=".MainActivity" />
         <!-- Fim das novas Activities -->
-
+        <activity
+            android:name=".ChartsActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
     </application>
 </manifest>

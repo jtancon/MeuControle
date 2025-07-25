@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-    <solid android:color="@color/blue_500"/>
+    <!-- Usa a cor primária do tema, que no nosso caso é o azul do novo design -->
+    <solid android:color="?attr/colorPrimary" />
 </shape>
